@@ -1,2 +1,2 @@
 # s-e-b.co
-Software Engineering Bureau
+Solutions Engineering Bureau
