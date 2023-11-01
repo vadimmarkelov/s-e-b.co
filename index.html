@@ -17,6 +17,33 @@
             background-color: steelblue;
             height: 100vh;
         }
+
+        span {
+            color: yellow;
+        }
+
+        #userInput:after {
+	        content:"_";
+	        opacity: 0;
+	        animation: cursor 1s infinite;
+        }
+        @keyframes cursor {
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -44,7 +71,42 @@ business@s-e-b.co
 KvK: 91034302
 BTW: NL004860420B92
 
+<span>guest@seb:~$ </span><span id="userInput"></span>
 </pre>
+<script>
+    const lastSymbol = /.$/;
+    const $userInput = document.getElementById('userInput');
+    let userInput = $userInput.innerText;
+
+    const interpreter = (command) => {
+        switch(true) {
+            case command.startsWith('sudo'):
+                return '♥ I like your curiosity \\(^-^)/';
+            case command.includes('reboot'):
+                location.reload();
+            default:
+                return '';
+        }
+    };
+
+    const keyListener = (keyboardEvent) => {
+        const key = keyboardEvent.key;
+        switch(key){
+            case 'Delete':
+            case 'Backspace':
+                userInput = userInput.replace(lastSymbol, '');
+                break;
+            case 'Enter':
+                userInput = interpreter(userInput);
+                break;
+            default:
+                userInput += key;
+        }
+        $userInput.innerText = userInput;
+    };
+
+    document.addEventListener('keydown', keyListener);
+</script>
 </body>
 </html>
 
